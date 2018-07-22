@@ -1,4 +1,7 @@
 {
   "token": "your_token",
-  "clan_tag": "your_clan_tag"
+  "clan_tag": "your_clan_tag",
+  "webhook_url": "your_webhook_url",
+  "avatar_url": "your_avatar_url",
+  "webhook_username": "your_webhook_username"
 }
