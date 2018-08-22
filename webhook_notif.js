@@ -12,7 +12,6 @@ let webhook_options = {
   headers: { "Content-Type": "application/json" },
 };
 
-
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
   if(response.statusCode === 200) {
@@ -28,17 +27,19 @@ request(options, function (error, response, body) {
         })
         .then(function() {
           if(war_data.clan.battlesPlayed !== war_data.clan.participants) {
+            let idle_warriors = [];
             for(i = 0; i<war_data.participants.length; i++){
               if(war_data.participants[i].battlesPlayed === 0){
-                request
-                  .post(webhook_options.webhook_url)
-                  .form({
-                    username: `${config.webhook_username}`,
-                    content: '```css' +'\n' +`${war_data.participants[i].name} hasn't played all his battles` + '\n' +'```',
-                    avatar_url: webhook_options.avatar_url
-                  })
+                idle_warriors.push('```css' + '\n' + `${war_data.participants[i].name} hasn't played all his battles` + '\n' + '```');
               }
             }
+            request
+              .post(webhook_options.webhook_url)
+              .form({
+                username: `${config.webhook_username}`,
+                content: idle_warriors,
+                avatar_url: webhook_options.avatar_url
+              })
           }
         })
     } else {
